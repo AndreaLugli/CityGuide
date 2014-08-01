@@ -1,0 +1,3 @@
+include ':app', ':library', ':demo'
+project(':library').projectDir = new File('app/libs/AndroidSlidingUpPanel-1.0.3/library')
+project(':demo').projectDir = new File('app/libs/AndroidSlidingUpPanel-1.0.3/demo')

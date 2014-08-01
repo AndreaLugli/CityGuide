@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="linked_geo_data_filters">
+        <item>Filter(?type = lgdo:Cafe || ?type = lgdo:Bar || ?type = lgdo:Pub || ?type = lgdo:IceCream</item>
+        <item>Filter(?type = lgdo:Supermarket</item>
+        <item>Filter(?type = lgdo:Cinema || ?type = lgdo:Theatre</item>
+        <item>Filter(?type = lgdo:Pharmacy</item>
+        <item>Filter(?type = lgdo:Bank || ?type = lgdo:PostOffice</item>
+        <item>Filter(?type = lgdo:Parking || ?type = lgdo:FuelStation</item>
+        <item>Filter(?type = lgdo:Shop || ?type = lgdo:ShoppingCenter || ?type = lgdo:Mall</item>
+        <item>Filter(?type = lgdo:Dance || ?type = lgdo:NightClub || ?type = lgdo:Pub</item>
+    </string-array>
+</resources>

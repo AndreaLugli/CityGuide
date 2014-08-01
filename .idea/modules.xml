@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/SemanticCityGuide.iml" filepath="$PROJECT_DIR$/SemanticCityGuide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/libs/AndroidSlidingUpPanel-1.0.3/demo/demo.iml" filepath="$PROJECT_DIR$/app/libs/AndroidSlidingUpPanel-1.0.3/demo/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/libs/AndroidSlidingUpPanel-1.0.3/library/library.iml" filepath="$PROJECT_DIR$/app/libs/AndroidSlidingUpPanel-1.0.3/library/library.iml" />
+    </modules>
+  </component>
+</project>
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="geodata_array">
+        <item>Cafè e gelaterie</item>
+        <item>Supermercati e alimentari</item>
+        <item>Cinema e teatri</item>
+        <item>Farmacie</item>
+        <item>Banche e posta</item>
+        <item>Parcheggio e rifornimento</item>
+        <item>Shopping</item>
+        <item>Night Life</item>
+    </string-array>
+</resources>
