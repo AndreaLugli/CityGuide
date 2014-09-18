@@ -128,8 +128,8 @@ public class ShowResultsActivity extends FragmentActivity{
 
         @Override
         protected void onPostExecute(String result) {
-
-            showResults(result);//Posiziono i markers sulla mappa
+            //Posiziono i markers sulla mappa e riempio l'elenco
+            showResults(result);
 
             if(this.progDailog.isShowing())
             {
@@ -153,7 +153,7 @@ public class ShowResultsActivity extends FragmentActivity{
             ArrayList<Place> listaPlaces = new ArrayList<Place>();
 
             for (int i = 0; i < bindings.length(); i++) {
-                JSONObject figlio = bindings.getJSONObject(i); //prendo un figlio diretto di bindings
+                JSONObject figlio = bindings.getJSONObject(i); //prendo il figlio diretto di posizione i di bindings
                 JSONObject f = figlio.getJSONObject("f");
                 String linkDBpedia = f.getString("value");
                 JSONObject latitudine = figlio.getJSONObject("latitudine");
@@ -162,10 +162,6 @@ public class ShowResultsActivity extends FragmentActivity{
                 double longi = longitudine.getDouble("value");
                 JSONObject label = figlio.getJSONObject("label");
                 String titolo = label.getString("value");
-                /*JSONObject infoLuogo = figlio.getJSONObject("abstract");
-                String descrizione = infoLuogo.getString("value");
-                */
-
                 JSONObject distanza = figlio.getJSONObject("callret-4");
                 double dist = distanza.getDouble("value");
 
@@ -199,8 +195,8 @@ public class ShowResultsActivity extends FragmentActivity{
                 }
             });
 
-            //Passo l'arrayList al fragment e setto l'adapter
-            elenco.passArrayList(listaPlaces, lang);
+            //Passo l'ArrayList al fragment e setto l'adapter
+            elenco.passArrayList(listaPlaces, lang, miaLati, miaLongi, from);
             elenco.setAdapter();
 
         } catch (JSONException e) {
@@ -280,7 +276,7 @@ public class ShowResultsActivity extends FragmentActivity{
             }
         }
 
-        String query = queryBase + ").} ORDER BY ASC 5"; //Chiudo la query con i filtri da passare all'encoder
+        String query = queryBase + ").} ORDER BY ASC 5 LIMIT 500"; //Chiudo la query con i filtri da passare all'encoder
 
 
         String encodeQueryBase = "";

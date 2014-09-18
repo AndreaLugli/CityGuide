@@ -153,9 +153,6 @@ public class LinkedGeoDataGuide extends Activity {
                 String nomePosto = label.getString("value");
                 JSONObject tipo = figlio.getJSONObject("tipo");
                 String tipoPosto = tipo.getString("value");
-                /*JSONObject infoLuogo = figlio.getJSONObject("abstract");
-                String descrizione = infoLuogo.getString("value");
-                */
 
                 JSONObject distanza = figlio.getJSONObject("callret-4");
                 double dist = distanza.getDouble("value"); //per adesso non la usiamo

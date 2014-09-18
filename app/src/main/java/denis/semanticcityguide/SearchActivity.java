@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -16,17 +17,21 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -73,8 +78,10 @@ public class SearchActivity extends Activity {
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    private String[] mGeoDataPlaces; //Array di stringhe contenente gli elementi definiti in navigation_array.xml
+
     private String[] mGeoDataFilters;
+    private MyAdapter myAdapter;
+    private SpinnerAdapter mySpinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +89,7 @@ public class SearchActivity extends Activity {
         setContentView(R.layout.activity_search);
 
         //Gestione del navigation drawer
-        mGeoDataPlaces = getResources().getStringArray(R.array.geodata_array); //Riempe un array dalle risorse
+
         mGeoDataFilters = getResources().getStringArray(R.array.linked_geo_data_filters);
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -91,8 +98,8 @@ public class SearchActivity extends Activity {
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mGeoDataPlaces));
+        myAdapter = new MyAdapter(this);
+        mDrawerList.setAdapter(myAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // ActionBarDrawerToggle ties together the the proper interactions
@@ -146,14 +153,28 @@ public class SearchActivity extends Activity {
         seekBarKm = (SeekBar) findViewById(R.id.seekBar);
         kmView = (TextView) findViewById(R.id.kmView);
         spinLang = (Spinner) findViewById(R.id.spinnerlang);
+        mySpinnerAdapter = new SpinnerAdapter(this);
+        spinLang.setAdapter(mySpinnerAdapter);
 
-        //Assegno ai 2 button visibili la possibilità di nascondere la tastiera nel caso di autocomplete aperta
+
+
+        //Assegno ai button visibili la possibilità di nascondere la tastiera nel caso di autocomplete aperta
         religionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 hideSoftKeyboard();
             }
         });
         sportButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                hideSoftKeyboard();
+            }
+        });
+        natureButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                hideSoftKeyboard();
+            }
+        });
+        archButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 hideSoftKeyboard();
             }
@@ -195,7 +216,7 @@ public class SearchActivity extends Activity {
                     autoCompView.setVisibility(View.VISIBLE);
                     autoCompView.requestFocus();
                     imm.showSoftInput(autoCompView, 0);
-                    changeLocationButton.setText(R.string.returnLocation);
+                    changeLocationButton.setBackground(getResources().getDrawable(R.drawable.geo_2));
                 }
                 else{
                     //Risetto lati e longi a default della posizione attuale perché al click del button
@@ -205,7 +226,7 @@ public class SearchActivity extends Activity {
                     longi = longigeo;
                     geoTextView.setVisibility(View.VISIBLE);
                     autoCompView.setVisibility(View.GONE);
-                    changeLocationButton.setText(R.string.changeLocation);
+                    changeLocationButton.setBackground(getResources().getDrawable(R.drawable.geo_1));
                 }
             }
         });
@@ -263,7 +284,7 @@ public class SearchActivity extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             //Se la TextView non è visibile, vuol dire che l'utente ha scelto di cambiare località
-            //Devo quindi cambiare latitudine e longitudine rispetto alla località dell'autocomplete text view
+            //Cambio latitudine e longitudine rispetto alla località dell'autocomplete text view
             String from = "currentLocation";
             if(geoTextView.getVisibility() == View.INVISIBLE){
                 convertAddress(autoCompView.getText().toString());
@@ -499,7 +520,7 @@ public class SearchActivity extends Activity {
             conn = (HttpURLConnection) url.openConnection();
             InputStreamReader in = new InputStreamReader(conn.getInputStream());
 
-            //Carica i risultati in uno strin builder
+            //Carica i risultati in uno string builder
             int read;
             char[] buff = new char[1024];
             while ((read = in.read(buff)) != -1) {
@@ -592,5 +613,95 @@ public class SearchActivity extends Activity {
             // TODO Auto-generated method stub
         }
 
+    }
+
+
+    //Creo un custom adapter per popolare il navigation drawer. Il layout delle righe è definito in custom_row.xml
+    class MyAdapter extends BaseAdapter {
+        private Context context;
+        private String[] mGeoDataPlaces; //Array di stringhe contenente gli elementi definiti in navigation_array.xml
+        int[] images = { R.drawable.caffe,R.drawable.supermercato, R.drawable.cinema,R.drawable.pharmacy
+                        ,R.drawable.banca, R.drawable.parcheggio, R.drawable.shopping ,R.drawable.nightclub};
+        public MyAdapter(Context context){
+            this.context = context;
+            mGeoDataPlaces = getResources().getStringArray(R.array.geodata_array); //Riempe un array dalle risorse
+        }
+        @Override
+        public int getCount() {
+            return mGeoDataPlaces.length;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return mGeoDataPlaces[i];
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            View row = null;
+            if(view == null){
+                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                row = inflater.inflate(R.layout.custom_row, viewGroup, false);
+            }else{
+                row = view;
+
+            }
+            TextView titleTextView = (TextView) row.findViewById(R.id.navigation_text);
+            ImageView titleImageView = (ImageView) row.findViewById(R.id.navigation_img);
+            titleTextView.setText(mGeoDataPlaces[i]);
+            titleImageView.setImageResource(images[i]);
+            //Alterno il colore delle righe
+            if(i % 2 != 0){
+                row.setBackgroundColor(Color.parseColor("#ceddf3"));
+            }
+            return row;
+        }
+    }
+    //Creo un custom adapter per popolare il navigation drawer. Il layout delle righe è definito in custom_row.xml
+    class SpinnerAdapter extends BaseAdapter {
+        private Context context;
+        private String[] mLanguages; //Array di stringhe contenente gli elementi definiti in navigation_array.xml
+        int[] images = { R.drawable.italy,R.drawable.germany, R.drawable.spain,R.drawable.france
+                ,R.drawable.russia, R.drawable.china, R.drawable.netherlands ,R.drawable.unitedkingdom};
+        public SpinnerAdapter(Context context){
+            this.context = context;
+            mLanguages = getResources().getStringArray(R.array.country_arrays); //Riempe un array dalle risorse
+        }
+        @Override
+        public int getCount() {
+            return mLanguages.length;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return mLanguages[i];
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            View row = null;
+            if(view == null){
+                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                row = inflater.inflate(R.layout.custom_spinner_row, viewGroup, false);
+            }else{
+                row = view;
+
+            }
+            TextView titleTextView = (TextView) row.findViewById(R.id.spinner_text);
+            ImageView titleImageView = (ImageView) row.findViewById(R.id.spinner_img);
+            titleTextView.setText(mLanguages[i]);
+            titleImageView.setImageResource(images[i]);
+            return row;
+        }
     }
 }

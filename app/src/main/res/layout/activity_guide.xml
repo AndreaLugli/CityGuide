@@ -1,12 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="denis.semanticcityguide.GuideActivity">
+    tools:context="denis.semanticcityguide.GuideActivity"
+    android:background="#ceddf3"
+    >
 
     <TextView
         android:layout_width="match_parent"
@@ -21,7 +23,8 @@
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
         android:layout_marginTop="2dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:maxLines="2" />
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -48,33 +51,36 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/buttonConteiner"
-        android:layout_below="@+id/scrollView">
+        android:layout_below="@+id/scrollView"
+        android:gravity="center"
+        android:layout_marginTop="17dp">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/seeImage"
+            android:layout_width="163dp"
+            android:layout_height="53dp"
             android:id="@+id/seeImageButton"
+            android:background="@drawable/img_button"
             android:visibility="gone"
-            android:layout_below="@+id/scrollView"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1" />
+            android:layout_marginRight="3dp" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btnNav"
+            android:layout_width="163dp"
+            android:layout_height="53dp"
             android:id="@+id/navButton"
-            android:layout_weight="1" />
+            android:background="@drawable/navigator_button"
+            android:visibility="gone" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/wikiLinkGuide"
-        android:gravity="center"
-        android:autoLink="web"
-        android:layout_below="@+id/buttonConteiner" />
+    <Button
+        android:layout_width="220dp"
+        android:layout_height="30dp"
+        android:background="@drawable/wiki_button"
+        android:id="@+id/wikibutton"
+        android:layout_below="@+id/buttonConteiner"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="false"
+        android:layout_marginTop="23dp"
+        android:visibility="gone" />
+
 
 </RelativeLayout>

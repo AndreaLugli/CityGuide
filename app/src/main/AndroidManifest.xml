@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light">
         <activity
@@ -21,7 +21,7 @@
         <activity
             android:name=".SearchActivity"
             android:configChanges="orientation"
-            android:label="@string/SCG"
+            android:label=""
             android:screenOrientation="portrait" >
         </activity>
 
@@ -47,7 +47,7 @@
         <activity
             android:name=".LinkedGeoDataGuide"
             android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_linked_geo_data_guide" >
+            android:label="" >
         </activity>
     </application>
 

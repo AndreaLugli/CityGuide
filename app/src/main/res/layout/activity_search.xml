@@ -2,27 +2,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#ceddf3">
 
     <!-- The main content view -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:android="http://schemas.android.com/apk/res/android">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/SCG"
-            android:id="@+id/title"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="5dp"
-            android:height="40dp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="25sp" />
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
@@ -34,7 +21,6 @@
             android:textSize="27sp"
             android:maxLines="3"
             android:visibility="gone"
-            android:layout_below="@+id/title"
             android:layout_centerHorizontal="true" />
 
         <LinearLayout
@@ -42,7 +28,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linearLayout"
-            android:layout_marginTop="17dp"
             android:layout_below="@+id/changeLocation"
             android:layout_centerHorizontal="true">
 
@@ -58,12 +43,13 @@
                     android:id="@+id/religionButton"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:textOff="@string/religione"
-                    android:textOn="@string/religione"
+                    android:textOff=""
+                    android:textOn=""
                     android:layout_margin="5dp"
                     android:focusableInTouchMode="false"
                     android:focusable="false"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:background="@drawable/check_religion"/>
 
                 <ToggleButton
                     android:layout_width="0dp"
@@ -72,10 +58,12 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:singleLine="false"
-                    android:textOff="@string/sport"
-                    android:textOn="@string/sport"
+                    android:textOff=""
+                    android:textOn=""
                     android:layout_margin="5dp"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:background="@drawable/check_sport"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -91,10 +79,11 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:checked="false"
-                    android:textOff="@string/natura"
-                    android:textOn="@string/natura"
+                    android:textOff=""
+                    android:textOn=""
                     android:layout_margin="5dp"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:background="@drawable/check_nature"/>
 
                 <ToggleButton
                     android:layout_width="0dp"
@@ -102,11 +91,12 @@
                     android:id="@+id/archButton"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:textOff="@string/architettura"
-                    android:textOn="@string/architettura"
+                    android:textOff=""
+                    android:textOn=""
                     android:checked="false"
                     android:layout_margin="5dp"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:background="@drawable/check_architettura"/>
 
             </LinearLayout>
 
@@ -123,10 +113,11 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:checked="false"
-                    android:textOff="@string/educazione"
-                    android:textOn="@string/educazione"
+                    android:textOff=""
+                    android:textOn=""
                     android:layout_margin="5dp"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:background="@drawable/check_education"/>
 
                 <ToggleButton
                     android:layout_width="0dp"
@@ -136,55 +127,59 @@
                     android:layout_weight="1"
                     android:layout_margin="5dp"
                     android:checked="false"
-                    android:textOff="@string/trasporti"
-                    android:textOn="@string/trasporti"
-                    android:textSize="25sp" />
+                    android:textOff=""
+                    android:textOn=""
+                    android:textSize="25sp"
+                    android:background="@drawable/check_transport"/>
             </LinearLayout>
         </LinearLayout>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/search"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text=""
             android:id="@+id/search"
             android:textSize="25sp"
             android:layout_below="@+id/spinnerlang"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/search_selector"
+            android:layout_marginTop="24dp" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
             android:id="@+id/changeLocation"
-            android:text="@string/changeLocation"
-            android:layout_below="@+id/geotextView"
+            android:text=""
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:background="@drawable/geo_1"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/geotextView"
+            android:gravity="center" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="75dp"
             android:id="@+id/geotextView"
-            android:layout_below="@+id/title"
             android:layout_centerHorizontal="true"
             android:maxLines="2"
-            android:textSize="27sp"
-            android:textIsSelectable="true"
-            android:textAlignment="center"
-            android:gravity="center" />
+            android:textSize="33sp"
+            android:textIsSelectable="false"
+            android:gravity="center"/>
 
         <SeekBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/seekBar"
             android:layout_below="@+id/linearLayout"
-            android:layout_alignLeft="@+id/title"
-            android:layout_alignStart="@+id/title"
             android:layout_alignRight="@+id/search"
             android:layout_alignEnd="@+id/search"
             android:layout_marginTop="10dp"
             android:progress="2"
-            android:max = "20"/>
+            android:max = "20"
+            android:layout_toEndOf="@+id/autocomplete"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -196,16 +191,15 @@
             android:layout_toEndOf="@+id/seekBar"
             android:layout_alignBottom="@+id/seekBar"
             android:textSize="20sp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
         <Spinner
             android:id="@+id/spinnerlang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/country_arrays"
             android:prompt="@string/language_prompt"
-            android:layout_below="@+id/seekBar"
-            android:layout_alignLeft="@+id/seekBar"
-            android:layout_alignStart="@+id/seekBar" />
+            android:layout_below="@+id/seekBar" />
 
     </RelativeLayout>
 
@@ -213,12 +207,13 @@
 
     <ListView
         android:id="@+id/left_drawer"
-        android:layout_width="260dp"
+        android:layout_width="285dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="#F3F3F4"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
-        android:dividerHeight="0dp" ></ListView>
+        android:dividerHeight="0dp" >
+    </ListView>
 
 </android.support.v4.widget.DrawerLayout>

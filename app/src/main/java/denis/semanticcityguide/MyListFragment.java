@@ -1,6 +1,5 @@
 package denis.semanticcityguide;
 
-import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,15 +16,21 @@ import java.util.ArrayList;
 public class MyListFragment extends ListFragment implements AdapterView.OnItemClickListener {
     private ArrayList<Place> place_data;
     private String lang;
+    private String from;
+    private String miaLati;
+    private String miaLongi;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list_fragment_layout, container, false);
     }
 
-    public void passArrayList(ArrayList<Place> place_data, String lang){
+    public void passArrayList(ArrayList<Place> place_data, String lang, String miaLati, String miaLongi, String from){
         this.place_data = place_data;
         this.lang = lang;
+        this.from = from;
+        this.miaLati = miaLati;
+        this.miaLongi = miaLongi;
     }
     public void setAdapter(){
         CustomArrayAdapter adapter = new CustomArrayAdapter(getActivity(),
@@ -41,6 +46,9 @@ public class MyListFragment extends ListFragment implements AdapterView.OnItemCl
         Intent openGuideActivity = new Intent(getActivity(), GuideActivity.class);
         openGuideActivity.putExtra("link", DBLink);
         openGuideActivity.putExtra("lang", lang);
+        openGuideActivity.putExtra("lati",miaLati);
+        openGuideActivity.putExtra("longi",miaLongi);
+        openGuideActivity.putExtra("from", from);
         startActivity(openGuideActivity);
     }
 }

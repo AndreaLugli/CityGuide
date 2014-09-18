@@ -3,6 +3,7 @@ package denis.semanticcityguide;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Place> {
             holder.titolo = (TextView)row.findViewById(R.id.località);
             holder.distanza = (TextView)row.findViewById(R.id.distanza);
             row.setTag(holder);
+
         }
         else
         {

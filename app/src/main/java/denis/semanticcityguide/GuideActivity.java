@@ -17,9 +17,12 @@ import android.util.Patterns;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -54,7 +57,6 @@ public class GuideActivity extends Activity {
 
     private TextView titleView;
     private TextView abstractView;
-    private TextView wikiLinkView;
     private Button imageButton;
     private Button navigationButton;
     private Bitmap mIcon = null;
@@ -73,11 +75,10 @@ public class GuideActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
 
-        //Recupero le view per dal layout
+        //Recupero le view dal layout
         titleView = (TextView)findViewById(R.id.titoloGuida);
         imageButton = (Button)findViewById(R.id.seeImageButton);
         abstractView = (TextView)findViewById(R.id.abstractGuide);
-        wikiLinkView = (TextView)findViewById(R.id.wikiLinkGuide);
         navigationButton = (Button) findViewById(R.id.navButton);
 
 
@@ -105,15 +106,6 @@ public class GuideActivity extends Activity {
                 progDialog.setMessage(getResources().getString(R.string.caricamento)); //Assegno il messaggio da visualizzare direttamente dalle resource
                 progDialog.setIndeterminate(true);
                 progDialog.setCancelable(true); //Obbliga l'utente ad attendere il termine del ProgressDialog
-                progDialog.setOnCancelListener(new DialogInterface.OnCancelListener()
-                {
-                    @Override
-                    public void onCancel(DialogInterface progDialog)
-                    {
-                        // cancel AsyncTask
-                        cancel(true);
-                    }
-                });
                 progDialog.show();
             }
         }
@@ -125,7 +117,6 @@ public class GuideActivity extends Activity {
                     InputStream in = new java.net.URL(url).openStream();
                     mIcon = BitmapFactory.decodeStream(in);
                 } catch (Exception e) {
-                    Log.e("Error", e.getMessage());
                 }
                 Display display = GuideActivity.this.getWindowManager().getDefaultDisplay();
                 Point size = new Point();
@@ -133,7 +124,7 @@ public class GuideActivity extends Activity {
                 int screenWidth = size.x;
                 int screenHeight = size.y;
 
-                // Get target image size
+                //Ricavo l'altezza e la larghezza dell'immagine
                 try{
                     bitmapHeight = mIcon.getHeight();
                     bitmapWidth = mIcon.getWidth();
@@ -271,22 +262,31 @@ public class GuideActivity extends Activity {
         navigationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(from.equalsIgnoreCase("currentLocation")){
-                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                            Uri.parse("google.navigation:q=" + lati + "," + longi + "&mode=w"));
-                    startActivity(intent);
-                }
-                else{
-                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                            Uri.parse("http://maps.google.com/maps?saddr="+ miaLati +","+ miaLongi + "&daddr="+ lati +"," + longi));
-                    startActivity(intent);
+                try{
+                    if(from.equalsIgnoreCase("currentLocation")){
+                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                                Uri.parse("google.navigation:q=" + lati + "," + longi + "&mode=w"));
+                        startActivity(intent);
+                    }
+                    else{
+                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                                Uri.parse("http://maps.google.com/maps?saddr="+ miaLati +","+ miaLongi + "&daddr="+ lati +"," + longi));
+                        startActivity(intent);
+                    }
+                }catch(Exception e){
+                    Toast.makeText(getBaseContext(), "Coordinate non disponibili", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         if(lang.equals("en")){
-            wikiLinkView.setText(linkWiki);
-
+            Button wikiButton = (Button)findViewById(R.id.wikibutton);
+            wikiButton.setVisibility(View.VISIBLE);
+            wikiButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(linkWiki)));
+                }
+            });
         }
         else{
             String linkConverted = "http://en.wikipedia.org/w/api.php?action=query&prop=langlinks&format=xml&lllimit=100&lllang="+lang+"&titles=";
@@ -309,9 +309,8 @@ public class GuideActivity extends Activity {
                     loadImage.execute(uriImg);
                 }
             });
-
         }
-
+        navigationButton.setVisibility(View.VISIBLE);
         titleView.setText(titolo);
         abstractView.setText(descrizione);
     }
@@ -345,7 +344,7 @@ public class GuideActivity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             try{
-                parseXMLLink(result);//Posiziono i markers sulla mappa
+                parseXMLLink(result);
             }catch (XPathExpressionException e){
 
             }
@@ -376,12 +375,17 @@ public class GuideActivity extends Activity {
 
         XPathExpression exprLink = xpath.compile("//langlinks/ll/text()");
         String tailLink = (String) exprLink.evaluate(doc, XPathConstants.STRING);
-        if(tailLink.length()==0){
-            wikiLinkView.setVisibility(View.GONE);
-        }else{
+
+        if(tailLink.length()!=0){
             String stringReplaced = tailLink.replaceAll(" ", "_");
-            String linkCorretto = "http://"+ lang +".wikipedia.org/wiki/" + stringReplaced;
-            wikiLinkView.setText(linkCorretto);
+            final String linkCorretto = "http://"+ lang +".wikipedia.org/wiki/" + stringReplaced;
+            Button wikiButton = (Button)findViewById(R.id.wikibutton);
+            wikiButton.setVisibility(View.VISIBLE);
+            wikiButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(linkCorretto)));
+                }
+            });
         }
     }
 }
